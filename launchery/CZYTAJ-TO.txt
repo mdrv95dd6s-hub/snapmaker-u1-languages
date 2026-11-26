@@ -41,7 +41,12 @@ Mac:
   - Komputery z procesorem Intel i Apple Silicon: bez znaczenia.
   - Najlepiej rozpakuj plik U1-launcher-mac.zip (zachowuje uprawnienia). Pojedynczy plik pobrany przeglądarką
     nie uruchomi się dwuklikiem, dopóki nie nadasz uprawnień: w Terminalu wpisz  chmod +x  (spacja), przeciągnij plik, Enter.
-  - Jeśli macOS zablokuje plik: Ustawienia systemowe, Prywatność i ochrona, „Otwórz mimo to”.
+  - Jeśli macOS blokuje plik po pobraniu, otwórz Terminal i wykonaj kolejno (tu przykład dla polskiego instalatora):
+      xattr -d com.apple.quarantine "$HOME/Downloads/U1-wgraj-polski.command"
+      chmod +x "$HOME/Downloads/U1-wgraj-polski.command"
+      bash "$HOME/Downloads/U1-wgraj-polski.command"
+    Dla innego pliku zmień tylko nazwę pliku w tych trzech poleceniach.
+  - Jeśli macOS pokaże komunikat o niezweryfikowanym pliku: Ustawienia systemowe, Prywatność i ochrona, „Otwórz mimo to”.
 
 Windows:
   - Windows 10 w wersji 1809 (październik 2018) lub nowszej albo Windows 11.
