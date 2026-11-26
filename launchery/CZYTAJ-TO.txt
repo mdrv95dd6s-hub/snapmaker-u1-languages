@@ -1,0 +1,73 @@
+Snapmaker U1: język na ekranie jednym kliknięciem (Mac i Windows)
+=================================================================
+
+Co to jest
+----------
+Mały plik, który zamiast Ciebie wpisuje polecenie w Terminalu (Mac) albo w wierszu poleceń (Windows).
+Pyta o adres IP drukarki, łączy się z nią przez SSH jako root i uruchamia skrypt, który dodaje język.
+Ten sam skrypt generuje strona (index.html); ten plik ma go tylko wbudowanego. Skrypt możesz przeczytać:
+jest na końcu pliku (Mac: po linii __U1_PAYLOAD__, Windows: po linii #PAYLOAD#; otwórz plik w Notatniku/TextEdit).
+
+Pliki
+-----
+  Po polsku:
+  U1-wgraj-polski          wgrywa język polski
+  U1-wgraj-czeski          wgrywa język czeski
+  U1-powrot-do-oryginalu   usuwa dodane języki i żółty pasek, czyści nakładkę (także inne dodatki) i restartuje drukarkę
+  Po angielsku (to samo): U1-install-polish, U1-install-czech, U1-return-to-original
+  Rozszerzenie .command to Mac, .bat to Windows.
+  Przeznaczone dla oryginalnego firmware Snapmakera.
+
+Co skrypt robi na drukarce
+--------------------------
+- Sprawdza, czy drukarka nie drukuje (w trakcie druku niczego nie zmienia).
+- Wgrywa język (dwa pliki w nakładce systemu), ustawia go jako aktualny i na chwilę restartuje ekran (kilkanaście sekund czarnego ekranu).
+- Ukrywa pasek z adresem IP i konsolą na dole ekranu.
+- NIE zmienia programu ekranu ani żadnych plików systemowych poza nakładką. Aktualizacja oprogramowania drukarki usuwa dodany język.
+- Nie wyłączaj drukarki, dopóki w oknie nie pojawi się napis „Gotowe.”.
+
+Czego potrzebujesz (wymagania)
+------------------------------
+Drukarka:
+  - Snapmaker U1 z oprogramowaniem 2.1.2.159 (przetestowane tylko na tej wersji; inne wersje nie były testowane,
+    a skrypt sam odmawia pracy, jeśli teksty nie pasują do wersji drukarki).
+  - Włączony Root Access (na ekranie drukarki, wg instrukcji na stronie). Tego nie da się zrobić programem.
+  - Drukarka połączona z tą samą siecią Wi-Fi co komputer. Gdzie znaleźć adres IP: na ekranie drukarki ikona sześcianu (Ustawienia), potem Wi-Fi.
+    Pod nazwą połączonej sieci (zielony znacznik) jest napis IP, np. 192.168.0.100.
+
+Mac:
+  - macOS z Terminalem i wbudowanym poleceniem ssh (jest w każdym macOS). Przetestowano na macOS 27.3 oraz na
+    emulatorze drukarki; starszych wersji macOS nie testowano.
+  - Komputery z procesorem Intel i Apple Silicon: bez znaczenia.
+  - Najlepiej rozpakuj plik U1-launcher-mac.zip (zachowuje uprawnienia). Pojedynczy plik pobrany przeglądarką
+    nie uruchomi się dwuklikiem, dopóki nie nadasz uprawnień: w Terminalu wpisz  chmod +x  (spacja), przeciągnij plik, Enter.
+  - Jeśli macOS zablokuje plik: Ustawienia systemowe, Prywatność i ochrona, „Otwórz mimo to”.
+
+Windows:
+  - Windows 10 w wersji 1809 (październik 2018) lub nowszej albo Windows 11.
+  - Klient OpenSSH (polecenie ssh): sprawdź, wpisując w wierszu poleceń  ssh -V . Jeśli go nie ma:
+    Ustawienia, Aplikacje, Funkcje opcjonalne, Dodaj funkcję, „Klient OpenSSH”.
+  - Windows PowerShell 5.1 (jest w systemie).
+  - UWAGA: plik Windows NIE był przetestowany na prawdziwym Windows (autor ma tylko Maca). Logikę sprawdzono tylko
+    wyrywkowo. Jeśli coś nie działa, użyj strony (index.html), która robi to samo krok po kroku.
+  - Windows może pokazać ostrzeżenie SmartScreen („system Windows ochronił ten komputer”): kliknij „Więcej informacji”,
+    potem „Uruchom mimo to”. Plik nie jest podpisany certyfikatem, bo to darmowy, nieoficjalny dodatek.
+
+Jak użyć
+--------
+1. Włącz Root Access na drukarce (instrukcja na stronie, część o Root Access). Sprawdź, czy drukarka nie drukuje.
+2. Uruchom plik (dwuklik). Wpisz adres IP drukarki.
+3. Gdy ssh zapyta o hasło, wpisz hasło konta root z instrukcji na stronie (znaki nie są widoczne podczas pisania).
+4. Poczekaj na „Gotowe.”. Język ustawi się sam.
+
+Gdy coś nie działa
+------------------
+- „REMOTE HOST IDENTIFICATION HAS CHANGED”: wpisz  ssh-keygen -R <adres IP>  i uruchom plik jeszcze raz
+  (klucz drukarki zmienia się po wyczyszczeniu nakładki).
+- Drukarka nie odpowiada: sprawdź adres IP i czy komputer jest w tej samej sieci.
+- Przed uruchomieniem pliku, którego nie znasz: otwórz go w edytorze tekstu i przeczytaj skrypt na końcu.
+
+Ważne
+-----
+Nieoficjalny dodatek, używasz na własną odpowiedzialność. Zmiana systemu drukarki może wpłynąć na gwarancję.
+Pliki nie zawierają niczego poza tłumaczeniem i skryptem widocznym na końcu pliku.
